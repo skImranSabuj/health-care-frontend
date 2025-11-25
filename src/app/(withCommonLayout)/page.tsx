@@ -1,11 +1,11 @@
-import { Button, Typography } from "@mui/material";
-import React from "react";
+import Banner from "@/src/components/UI/HomePage/Banner/Banner";
+import Specialities from "@/src/components/UI/HomePage/Specialities/Specialities";
 
 const HomePage = () => {
   return (
     <div>
-      <Typography>This is Homepage</Typography>
-      <Button>Outlined</Button>
+      <Banner />
+      <Specialities />
     </div>
   );
 };
