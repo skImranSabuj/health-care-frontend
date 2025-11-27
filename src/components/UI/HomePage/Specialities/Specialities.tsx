@@ -1,4 +1,5 @@
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
+import { SpecialityType } from "@/src/types/types";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import Image from "next/image";
 
@@ -23,7 +24,7 @@ const Specialities = async () => {
           columns={{ xs: 4, sm: 8, md: 12 }}
           gap={2}
         >
-          {specialities?.map((item: any) => (
+          {specialities?.map((item: SpecialityType) => (
             <Box
               component={Grid}
               key={item?.id}
