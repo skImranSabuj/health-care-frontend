@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const WhyUs = () => {
   return (
-    <Container sx={{ pt: 2, pb: 15 }}>
+    <Container sx={{ pt: 2, pb: 5 }}>
       <Box textAlign="center">
         <Typography
           variant="h4"
