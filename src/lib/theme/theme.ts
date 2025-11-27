@@ -20,7 +20,7 @@ export const theme = createTheme({
         root: {
           // Some CSS
           fontSize: "1rem",
-          padding: "12px 36px",
+          // padding: "12px 36px",
         },
       },
     },

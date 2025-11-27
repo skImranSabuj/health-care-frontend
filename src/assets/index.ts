@@ -15,6 +15,12 @@ import facebook from "./landing_page/facebook.png";
 import instagram from "./landing_page/instagram.png";
 import x from "./landing_page/twitter.png";
 import linkedin from "./landing_page/linkedin.png";
+import chooseUs from "./choose-us.png";
+import howItWorks from "./how-it-works-img.png";
+import serachIcon from "./icons/search-icon.png";
+import doctorIcon from "./icons/doctor-icon.png";
+import charity from "./icons/charity-icon.png";
+import scheduleIcon from "./icons/appointment-icon.png";
 
 // SVGs
 import logo from "./svgs/logo.svg";
@@ -54,12 +60,18 @@ const assets = {
     doctor3,
     stethoscope,
     familyOnBeach,
+    chooseUs,
+    howItWorks,
   },
   icons: {
     facebook,
     instagram,
     x,
     linkedin,
+    serachIcon,
+    doctorIcon,
+    charity,
+    scheduleIcon,
   },
   svgs: {
     logo,

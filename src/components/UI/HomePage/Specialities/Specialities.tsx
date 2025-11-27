@@ -1,9 +1,12 @@
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
+import { SpecialityType } from "@/src/types/types";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import Image from "next/image";
 
 const Specialities = async () => {
-  const res = await fetch(`${process.env.API_URL}/specialties`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/specialties`
+  );
   const { data: specialities } = await res.json();
   console.log({ specialities });
   return (
@@ -23,7 +26,7 @@ const Specialities = async () => {
           columns={{ xs: 4, sm: 8, md: 12 }}
           gap={2}
         >
-          {specialities?.map((item: any) => (
+          {specialities?.map((item: SpecialityType) => (
             <Box
               component={Grid}
               key={item?.id}

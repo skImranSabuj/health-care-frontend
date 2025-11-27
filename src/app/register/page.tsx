@@ -1,6 +1,7 @@
 "use client";
 import assets from "@/src/assets";
-import { loginUser } from "@/src/services/actions/loginUser";
+import { registerPatient } from "@/src/services/actions/registerPatient";
+import { makeFormData } from "@/src/utils/makeFormData";
 import {
   Box,
   Button,
@@ -13,33 +14,42 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
-type LoginDataType = {
+interface IPatient {
+  name: string;
   email: string;
-  password: string;
-};
+  contactNumber: string;
+  address: string;
+}
 
-const LoginPage = () => {
+interface IRegisterObject {
+  password: string;
+  patient: IPatient;
+}
+
+const RegisterPage = () => {
   const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginDataType>();
-  const onSubmit: SubmitHandler<LoginDataType> = async (data) => {
+  } = useForm<IRegisterObject>();
+  const onSubmit: SubmitHandler<IRegisterObject> = async (data) => {
     try {
-      const response = await loginUser(data);
-      console.log(response);
-      if (response?.data?.accessToken) {
+      console.log(data);
+      const formData = makeFormData(data);
+      const response = await registerPatient(formData);
+      if (response?.data?.id) {
         toast.success(response?.message);
-        router.push("/");
+        router.push("/login");
       }
     } catch (err: any) {
       console.log(err?.message);
     }
   };
+
   return (
     <Container>
       <Stack
@@ -63,11 +73,11 @@ const LoginPage = () => {
             <Image
               src={assets.svgs.logo}
               alt="rehister icon"
-              width={100}
-              height={100}
+              width={50}
+              height={50}
             />
             <Typography variant="h5" mt={1}>
-              Login
+              Patient Register
             </Typography>
           </Stack>
           <Box p={4}>
@@ -75,27 +85,57 @@ const LoginPage = () => {
               <Grid container spacing={2}>
                 <Grid size={12}>
                   <TextField
-                    label="Email"
+                    label="Name"
+                    defaultValue="Name"
                     size="small"
                     fullWidth
-                    {...register("email")}
+                    {...register("patient.name")}
                   />
                 </Grid>
-                <Grid size={12}>
+                <Grid size={6}>
+                  <TextField
+                    label="Email"
+                    type="email"
+                    defaultValue="Email"
+                    size="small"
+                    fullWidth
+                    {...register("patient.email")}
+                  />
+                </Grid>
+                <Grid size={6}>
                   <TextField
                     label="Password"
-                    type="passEmail"
+                    type="password"
+                    defaultValue="Password"
                     size="small"
                     fullWidth
                     {...register("password")}
                   />
                 </Grid>
+                <Grid size={6}>
+                  <TextField
+                    label="Contact Number"
+                    type="text"
+                    size="small"
+                    fullWidth
+                    {...register("patient.contactNumber")}
+                  />
+                </Grid>
+                <Grid size={6}>
+                  <TextField
+                    label="Address"
+                    type="text"
+                    size="small"
+                    fullWidth
+                    {...register("patient.address")}
+                  />
+                </Grid>
               </Grid>
               <Button fullWidth sx={{ my: 3 }} type="submit">
-                Login
+                REGISTER
               </Button>
               <Typography>
-                Do not have an account? <Link href="register">Register</Link>
+                Do you have an account? <Link href="login">Login</Link>
               </Typography>
             </form>
           </Box>
@@ -105,4 +145,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
