@@ -7,7 +7,9 @@ import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRigh
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 
 const TopDoctors = async () => {
-  const res = await fetch(`${process.env.API_URL}/doctor?page=1&limit=3`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/doctor?page=1&limit=3`
+  );
   const { data: doctors } = await res.json();
   console.log({ doctors });
   return (

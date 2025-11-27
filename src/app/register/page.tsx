@@ -1,5 +1,7 @@
 "use client";
 import assets from "@/src/assets";
+import { registerPatient } from "@/src/services/actions/registerPatient";
+import { makeFormData } from "@/src/utils/makeFormData";
 import {
   Box,
   Button,
@@ -11,7 +13,9 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 
 interface IPatient {
   name: string;
@@ -26,15 +30,26 @@ interface IRegisterObject {
 }
 
 const RegisterPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<IRegisterObject>();
-  const onSubmit: SubmitHandler<IRegisterObject> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<IRegisterObject> = async (data) => {
+    try {
+      console.log(data);
+      const formData = makeFormData(data);
+      const response = await registerPatient(formData);
+      if (response?.data?.id) {
+        toast.success(response?.message);
+        router.push("/login");
+      }
+    } catch (err: any) {
+      console.log(err?.message);
+    }
+  };
 
-  console.log(watch("patient.name")); // watch input value by passing the name of it
   return (
     <Container>
       <Stack

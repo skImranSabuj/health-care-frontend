@@ -4,7 +4,9 @@ import { grey } from "@mui/material/colors";
 import Image from "next/image";
 
 const Specialities = async () => {
-  const res = await fetch(`${process.env.API_URL}/specialties`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/specialties`
+  );
   const { data: specialities } = await res.json();
   console.log({ specialities });
   return (
