@@ -40,6 +40,7 @@ import award from "./svgs/award-icon.svg";
 import care from "./svgs/care-icon.svg";
 import equipment from "./svgs/medical-equipment-icon.svg";
 import call from "./svgs/call-icon.svg";
+import chooseUs from "./choose-us.png";
 
 const assets = {
   images: {
@@ -54,6 +55,7 @@ const assets = {
     doctor3,
     stethoscope,
     familyOnBeach,
+    chooseUs,
   },
   icons: {
     facebook,
