@@ -1,19 +1,13 @@
 "use client";
 import assets from "@/src/assets";
+import HCForm from "@/src/components/Forms/HCForm";
+import HCInput from "@/src/components/Forms/HCInput";
 import { loginUser } from "@/src/services/actions/loginUser";
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { storeUserData } from "@/src/services/auth.services";
+import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 type LoginDataType = {
@@ -23,17 +17,13 @@ type LoginDataType = {
 
 const LoginPage = () => {
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginDataType>();
-  const onSubmit: SubmitHandler<LoginDataType> = async (data) => {
+
+  const onSubmit = async (data) => {
     try {
       const response = await loginUser(data);
-      console.log(response);
       if (response?.data?.accessToken) {
         toast.success(response?.message);
+        storeUserData(response?.data?.accessToken);
         router.push("/");
       }
     } catch (err: any) {
@@ -71,23 +61,24 @@ const LoginPage = () => {
             </Typography>
           </Stack>
           <Box p={4}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <HCForm onSubmit={onSubmit}>
               <Grid container spacing={2}>
                 <Grid size={12}>
-                  <TextField
+                  <HCInput
+                    type="email"
+                    name="email"
                     label="Email"
                     size="small"
                     fullWidth
-                    {...register("email")}
                   />
                 </Grid>
                 <Grid size={12}>
-                  <TextField
+                  <HCInput
+                    name="password"
                     label="Password"
-                    type="passEmail"
                     size="small"
                     fullWidth
-                    {...register("password")}
+                    type="password"
                   />
                 </Grid>
               </Grid>
@@ -97,7 +88,7 @@ const LoginPage = () => {
               <Typography>
                 Do not have an account? <Link href="register">Register</Link>
               </Typography>
-            </form>
+            </HCForm>
           </Box>
         </Box>
       </Stack>

@@ -4,6 +4,7 @@ export const registerPatient = async (data: FormData) => {
   const res = await fetch(apiURL, {
     method: "POST",
     body: data,
+    cache: "no-store",
   });
   const registerdPatient = await res.json();
   return registerdPatient;

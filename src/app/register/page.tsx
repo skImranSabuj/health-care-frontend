@@ -1,6 +1,8 @@
 "use client";
 import assets from "@/src/assets";
+import { loginUser } from "@/src/services/actions/loginUser";
 import { registerPatient } from "@/src/services/actions/registerPatient";
+import { storeUserData } from "@/src/services/auth.services";
 import { makeFormData } from "@/src/utils/makeFormData";
 import {
   Box,
@@ -40,10 +42,18 @@ const RegisterPage = () => {
     try {
       console.log(data);
       const formData = makeFormData(data);
-      const response = await registerPatient(formData);
-      if (response?.data?.id) {
-        toast.success(response?.message);
-        router.push("/login");
+      const registerResponse = await registerPatient(formData);
+      if (registerResponse?.data?.id) {
+        toast.success(registerResponse?.message);
+        const response = await loginUser({
+          email: data.patient.email,
+          password: data.password,
+        });
+        console.log(response);
+        if (response?.data?.accessToken) {
+          storeUserData(response?.data?.accessToken);
+          router.push("/");
+        }
       }
     } catch (err: any) {
       console.log(err?.message);
@@ -86,7 +96,6 @@ const RegisterPage = () => {
                 <Grid size={12}>
                   <TextField
                     label="Name"
-                    defaultValue="Name"
                     size="small"
                     fullWidth
                     {...register("patient.name")}
@@ -96,7 +105,6 @@ const RegisterPage = () => {
                   <TextField
                     label="Email"
                     type="email"
-                    defaultValue="Email"
                     size="small"
                     fullWidth
                     {...register("patient.email")}
@@ -106,7 +114,6 @@ const RegisterPage = () => {
                   <TextField
                     label="Password"
                     type="password"
-                    defaultValue="Password"
                     size="small"
                     fullWidth
                     {...register("password")}
