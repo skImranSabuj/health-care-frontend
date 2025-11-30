@@ -12,7 +12,7 @@ type FormConfigType = {
 
 type HCFormProps = {
   children: React.ReactNode;
-  onSubmit: (data: FieldValues) => void;
+  onSubmit: (data: FieldValues, cbfn: () => void) => void;
 } & FormConfigType;
 
 export default function HCForm({
@@ -29,8 +29,8 @@ export default function HCForm({
   const { handleSubmit, reset } = methods;
 
   const submit: SubmitHandler<FieldValues> = (data) => {
-    onSubmit(data);
-    reset();
+    onSubmit(data, reset);
+    // reset();
   };
 
   return (

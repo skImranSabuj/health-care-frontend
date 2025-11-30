@@ -10,6 +10,7 @@ type HCInputProps = {
   type?: string;
   required?: boolean;
   sx?: SxProps;
+  errorMessage?: string;
 };
 
 const HCInput = ({
@@ -20,6 +21,7 @@ const HCInput = ({
   placeholder = label,
   required = false,
   fullWidth,
+  errorMessage,
   sx,
 }: HCInputProps) => {
   const { control } = useFormContext();
@@ -38,8 +40,8 @@ const HCInput = ({
           fullWidth={fullWidth}
           required={required}
           sx={{ ...sx }}
-          error={!!error?.message}
-          helperText={error?.message}
+          error={!!error?.message || !!errorMessage}
+          helperText={error?.message || errorMessage}
         />
       )}
     />
