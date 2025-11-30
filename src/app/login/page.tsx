@@ -9,11 +9,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-type LoginDataType = {
-  email: string;
-  password: string;
-};
+export const validationSchema = z.object({
+  email: z.string().email("Please enter a valid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
 
 const LoginPage = () => {
   const router = useRouter();
@@ -61,7 +63,11 @@ const LoginPage = () => {
             </Typography>
           </Stack>
           <Box p={4}>
-            <HCForm onSubmit={onSubmit}>
+            <HCForm
+              onSubmit={onSubmit}
+              resolver={zodResolver(validationSchema)}
+              defaultValues={{ email: "", password: "" }}
+            >
               <Grid container spacing={2}>
                 <Grid size={12}>
                   <HCInput

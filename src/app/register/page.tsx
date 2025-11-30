@@ -1,57 +1,33 @@
 "use client";
 import assets from "@/src/assets";
+import HCForm from "@/src/components/Forms/HCForm";
+import HCInput from "@/src/components/Forms/HCInput";
 import { loginUser } from "@/src/services/actions/loginUser";
 import { registerPatient } from "@/src/services/actions/registerPatient";
 import { storeUserData } from "@/src/services/auth.services";
 import { makeFormData } from "@/src/utils/makeFormData";
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
-
-interface IPatient {
-  name: string;
-  email: string;
-  contactNumber: string;
-  address: string;
-}
-
-interface IRegisterObject {
-  password: string;
-  patient: IPatient;
-}
 
 const RegisterPage = () => {
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IRegisterObject>();
-  const onSubmit: SubmitHandler<IRegisterObject> = async (data) => {
+  const onSubmit = async (data: FieldValues) => {
     try {
       console.log(data);
       const formData = makeFormData(data);
       const registerResponse = await registerPatient(formData);
       if (registerResponse?.data?.id) {
         toast.success(registerResponse?.message);
-        const response = await loginUser({
+        const loginResponse = await loginUser({
           email: data.patient.email,
           password: data.password,
         });
-        console.log(response);
-        if (response?.data?.accessToken) {
-          storeUserData(response?.data?.accessToken);
+        if (loginResponse?.data?.accessToken) {
+          storeUserData(loginResponse?.data?.accessToken);
           router.push("/");
         }
       }
@@ -91,50 +67,42 @@ const RegisterPage = () => {
             </Typography>
           </Stack>
           <Box p={4}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <HCForm onSubmit={onSubmit}>
               <Grid container spacing={2}>
                 <Grid size={12}>
-                  <TextField
-                    label="Name"
-                    size="small"
-                    fullWidth
-                    {...register("patient.name")}
-                  />
+                  <HCInput label="Name" fullWidth name="patient.name" />
                 </Grid>
                 <Grid size={6}>
-                  <TextField
+                  <HCInput
                     label="Email"
                     type="email"
-                    size="small"
                     fullWidth
-                    {...register("patient.email")}
+                    name="patient.email"
                   />
                 </Grid>
                 <Grid size={6}>
-                  <TextField
+                  <HCInput
                     label="Password"
                     type="password"
-                    size="small"
                     fullWidth
-                    {...register("password")}
+                    name="password"
                   />
                 </Grid>
                 <Grid size={6}>
-                  <TextField
+                  <HCInput
                     label="Contact Number"
                     type="text"
                     size="small"
                     fullWidth
-                    {...register("patient.contactNumber")}
+                    name="patient.contactNumber"
                   />
                 </Grid>
                 <Grid size={6}>
-                  <TextField
+                  <HCInput
                     label="Address"
                     type="text"
-                    size="small"
                     fullWidth
-                    {...register("patient.address")}
+                    name="patient.address"
                   />
                 </Grid>
               </Grid>
@@ -144,7 +112,7 @@ const RegisterPage = () => {
               <Typography>
                 Do you have an account? <Link href="login">Login</Link>
               </Typography>
-            </form>
+            </HCForm>
           </Box>
         </Box>
       </Stack>
