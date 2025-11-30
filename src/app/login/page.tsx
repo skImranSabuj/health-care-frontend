@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { FieldValues } from "react-hook-form";
 
 export const validationSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -30,7 +31,7 @@ const LoginPage = () => {
   const router = useRouter();
   const [authError, setAuthError] = useState<string>("");
 
-  const onSubmit = async (data, cbfn) => {
+  const onSubmit = async (data: FieldValues, cbfn?: () => void) => {
     setAuthError("");
     try {
       const response = await loginUser(data);
