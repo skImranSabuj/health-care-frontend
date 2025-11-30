@@ -6,6 +6,7 @@ export const loginUser = async (data: FieldValues) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
+    cache: "no-store",
   });
   const loggedinUser = await res.json();
   return loggedinUser;
