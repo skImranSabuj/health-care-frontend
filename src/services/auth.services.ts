@@ -16,7 +16,7 @@ export const getUserData = (): any => {
     const decoded = decodedToken(token);
     return {
       ...decoded,
-      role: decoded?.roles?.toLowerCase(),
+      role: decoded?.role?.toLowerCase(),
     };
   }
   return null;

@@ -38,7 +38,7 @@ const LoginPage = () => {
       if (response?.data?.accessToken) {
         toast.success(response?.message);
         storeUserData(response?.data?.accessToken);
-        router.push("/");
+        router.push("/dashboard");
         if (cbfn) cbfn();
       } else {
         setAuthError(response?.message || "Login failed");

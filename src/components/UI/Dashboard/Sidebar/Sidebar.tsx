@@ -7,8 +7,20 @@ import { APP_NAME } from "@/src/const/const";
 import { drawerItems } from "@/src/utils/drawerItems";
 import { UserRoles } from "@/src/types";
 import SideBarItem from "./SideBarItem";
+import { getUserData } from "@/src/services/auth.services";
+import { useEffect, useState } from "react";
 
 const Sidebar = () => {
+  // const [userRole, setUserRole] = useState(getUserData() || "");
+  const { role: userRole } = getUserData();
+
+  // useEffect(() => {
+  //   const { role } = getUserData();
+  //   setUserRole(role);
+  // }, []);
+
+  console.log(userRole);
+
   return (
     <div>
       <Stack
@@ -24,7 +36,7 @@ const Sidebar = () => {
         </Typography>
       </Stack>
       <List>
-        {drawerItems("admin" as UserRoles).map((item) => (
+        {drawerItems(userRole as UserRoles).map((item) => (
           <SideBarItem key={item.title} item={item} />
         ))}
       </List>
