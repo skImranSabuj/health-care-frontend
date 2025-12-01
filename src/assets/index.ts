@@ -21,9 +21,9 @@ import serachIcon from "./icons/search-icon.png";
 import doctorIcon from "./icons/doctor-icon.png";
 import charity from "./icons/charity-icon.png";
 import scheduleIcon from "./icons/appointment-icon.png";
+import logo from "./logo.png";
 
 // SVGs
-import logo from "./svgs/logo.svg";
 import search from "./svgs/search.svg";
 import calender from "./svgs/calender.svg";
 import location from "./svgs/location.svg";

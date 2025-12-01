@@ -3,19 +3,12 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
+import { Toolbar, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import Sidebar from "../Sidebar/Sidebar";
+import { APP_NAME } from "@/src/const/const";
 
 const drawerWidth = 240;
 
@@ -42,38 +35,6 @@ export default function ResponsiveDrawer({
     }
   };
 
-  const drawer = (
-    <div>
-      <Toolbar />
-      <Divider />
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
-
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -82,6 +43,10 @@ export default function ResponsiveDrawer({
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          backgroundColor: "#ECF4E8",
+          color: "grey",
+          boxShadow: 0,
+          borderBottom: "1px solid #ddd",
         }}
       >
         <Toolbar>
@@ -94,9 +59,19 @@ export default function ResponsiveDrawer({
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Responsive drawer
-          </Typography>
+          <Box>
+            <Typography
+              variant="body1"
+              component="h1"
+              fontWeight={600}
+              color="grey"
+            >
+              Sk Imran
+            </Typography>
+            <Typography variant="body1" component="h1" color="primary.main">
+              Welcome to {APP_NAME} Dashboard
+            </Typography>
+          </Box>
         </Toolbar>
       </AppBar>
       <Box
@@ -123,7 +98,7 @@ export default function ResponsiveDrawer({
             },
           }}
         >
-          {drawer}
+          <Sidebar />
         </Drawer>
         <Drawer
           variant="permanent"
@@ -136,7 +111,7 @@ export default function ResponsiveDrawer({
           }}
           open
         >
-          {drawer}
+          <Sidebar />
         </Drawer>
       </Box>
       <Box
