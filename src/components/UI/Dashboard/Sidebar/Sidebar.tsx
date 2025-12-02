@@ -11,15 +11,12 @@ import { getUserData } from "@/src/services/auth.services";
 import { useEffect, useState } from "react";
 
 const Sidebar = () => {
-  // const [userRole, setUserRole] = useState(getUserData() || "");
-  const { role: userRole } = getUserData();
+  const [userRole, setUserRole] = useState("");
 
-  // useEffect(() => {
-  //   const { role } = getUserData();
-  //   setUserRole(role);
-  // }, []);
-
-  console.log(userRole);
+  useEffect(() => {
+    const { role } = getUserData();
+    setUserRole(role);
+  }, []);
 
   return (
     <div>
